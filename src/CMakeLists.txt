@@ -159,6 +159,7 @@ target_include_directories(poly PUBLIC ${includes_dir})
 target_link_libraries(poly PUBLIC
   Threads::Threads
   Cairo::CairoFC
+  freetype
   xpp
   LibUV::LibUV
   )
