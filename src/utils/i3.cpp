@@ -15,6 +15,20 @@
 POLYBAR_NS
 
 namespace i3_util {
+
+  void print_workspaces(const vector<shared_ptr<i3_util::workspace_t>>& workspaces) {
+    std::string ws_list;
+
+    for (const auto& ws : workspaces) {
+      if (!ws_list.empty()) {
+        ws_list += ", ";
+      }
+      ws_list += ws->name;
+    }
+
+    m_logger.info("Workspaces: %s", ws_list);
+  }
+
   /**
    * Get all workspaces for given output
    */
