@@ -264,15 +264,26 @@ namespace modules {
         m_log.info("%s: Sending workspace focus command to ipc handler", name());
         conn.send_command(make_workspace_command((*current_ws)->name));
       }
-      m_log.info("%s: Sending workspace next_on_output command to ipc handler", name());
-      conn.send_command("workspace next_on_output");
+
+      if (std::next(current_ws) == workspaces.end()) {
+        this->action_focus((*workspaces.begin())->name);
+      } else {
+        m_log.info("%s: Sending workspace next_on_output command to ipc handler", name());
+        conn.send_command("workspace next_on_output");
+      }
+
     } else if (!next && (m_wrap || current_ws != workspaces.begin())) {
       if (!(*current_ws)->focused) {
         m_log.info("%s: Sending workspace focus command to ipc handler", name());
         conn.send_command(make_workspace_command((*current_ws)->name));
       }
-      m_log.info("%s: Sending workspace prev_on_output command to ipc handler", name());
-      conn.send_command("workspace prev_on_output");
+
+      if (current_ws == workspaces.begin()) {
+        this->action_focus((*(workspaces.end() - 1))->name);
+      } else {
+        m_log.info("%s: Sending workspace prev_on_output command to ipc handler", name());
+        conn.send_command("workspace prev_on_output");
+      }
     }
   }
 
