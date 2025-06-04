@@ -21,17 +21,6 @@ POLYBAR_NS
 
 static logger m_logger(polybar::loglevel::INFO);
 
-static int get_current_group_id() {
-  const char* home = std::getenv("HOME");
-  if (!home) return 0;
-
-  std::ifstream f(std::string(home) + "/.cache/i3/current_group");
-  int group_id = 0;
-  f >> group_id;
-  return group_id;
-}
-
-
 namespace i3_util {
 
   void print_workspaces(const vector<shared_ptr<i3_util::workspace_t>>& workspaces) {
@@ -45,6 +34,16 @@ namespace i3_util {
     }
 
     m_logger.info("Workspaces: %s", ws_list);
+  }
+
+  int get_current_group_id() {
+    const char* home = std::getenv("HOME");
+    if (!home) return 0;
+
+    std::ifstream f(std::string(home) + "/.cache/i3/current_group");
+    int group_id = 0;
+    f >> group_id;
+    return group_id;
   }
 
   /**
