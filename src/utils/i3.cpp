@@ -52,14 +52,11 @@ namespace i3_util {
   vector<shared_ptr<workspace_t>> workspaces(const connection_t& conn, const string& output, const bool show_urgent) {
     vector<shared_ptr<workspace_t>> result;
     auto group_id = get_current_group_id();
-    m_logger.info("Current group ID: %d", group_id);
-    print_workspaces(conn.get_workspaces());
 
     for (auto&& ws : conn.get_workspaces()) {
       if ( (output.empty() || ws->output == output || (show_urgent && ws->urgent))
         && (ws->num > group_id && ws->num <= (group_id + 10))) {
         result.emplace_back(forward<decltype(ws)>(ws));
-        m_logger.info("Workspace %s [%d]", ws->name, ws->num);
       }
     }
     return result;
