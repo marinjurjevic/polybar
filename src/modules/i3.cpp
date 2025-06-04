@@ -43,6 +43,7 @@ namespace modules {
     m_show_urgent = m_conf.get(name(), "show-urgent", m_show_urgent);
     m_strip_wsnumbers = m_conf.get(name(), "strip-wsnumbers", m_strip_wsnumbers);
     m_fuzzy_match = m_conf.get(name(), "fuzzy-match", m_fuzzy_match);
+    m_rel_group_workspace_index = m_conf.get(name(), "rel-group-workspace-index", m_rel_group_workspace_index);
 
     m_conf.warn_deprecated(name(), "wsname-maxlen", "%name:min:max%");
 
@@ -184,7 +185,9 @@ namespace modules {
         label->replace_token("%output%", ws->output);
         label->replace_token("%name%", ws_name);
         label->replace_token("%icon%", icon->get());
-        label->replace_token("%index%", to_string(ws->num));
+        label->replace_token("%index%", to_string(m_rel_group_workspace_index ?
+          ws->num - i3_util::get_current_group_id() : ws->num
+        ));
         m_workspaces.emplace_back(std::make_unique<workspace>(ws->name, ws_state, move(label)));
       }
 

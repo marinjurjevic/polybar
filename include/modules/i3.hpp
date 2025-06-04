@@ -97,6 +97,7 @@ namespace modules {
     bool m_show_urgent{false};
     bool m_strip_wsnumbers{false};
     bool m_fuzzy_match{false};
+    bool m_rel_group_workspace_index{false};
 
     unique_ptr<i3_util::connection_t> m_ipc;
   };
